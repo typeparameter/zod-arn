@@ -1,0 +1,56 @@
+{
+  "name": "zod-arn",
+  "version": "0.0.0",
+  "description": "Zod codec that parses Amazon Resource Names (ARNs) into their components",
+  "keywords": [
+    "arn",
+    "aws",
+    "zod"
+  ],
+  "homepage": "https://github.com/typeparameter/zod-arn",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/typeparameter/zod-arn.git"
+  },
+  "files": [
+    "dist"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "exports": "./dist/index.js",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "scripts": {
+    "build": "tsc",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check .",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "test": "tsc && tsc -p test && node --test 'test/**/*.test.ts'",
+    "prepack": "pnpm build"
+  },
+  "dependencies": {
+    "@aws-sdk/util-arn-parser": "^3.972.39"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "conventional-changelog-conventionalcommits": "^8.0.0",
+    "oxfmt": "^0.71.0",
+    "oxlint": "^1.81.0",
+    "oxlint-tsgolint": "~7.0.2001",
+    "typescript": "~7.0.2",
+    "zod": "^4.1.0"
+  },
+  "peerDependencies": {
+    "zod": "^4.1.0"
+  },
+  "release": {
+    "preset": "conventionalcommits"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

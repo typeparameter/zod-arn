@@ -1,0 +1,6 @@
+# Build output
+/dist
+
+# npm
+/node_modules
+*.tgz
