@@ -32,9 +32,6 @@
     "test": "tsc && tsc -p test && node --test 'test/**/*.test.ts'",
     "prepack": "pnpm build"
   },
-  "dependencies": {
-    "@aws-sdk/util-arn-parser": "^3.972.39"
-  },
   "devDependencies": {
     "@types/node": "^24.0.0",
     "conventional-changelog-conventionalcommits": "^8.0.0",
