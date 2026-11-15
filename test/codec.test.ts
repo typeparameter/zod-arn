@@ -35,6 +35,10 @@ describe("decode", () => {
       "",
       "   ",
       "not-an-arn",
+      "arn:",
+      "arn:aws",
+      "arn:aws:iam",
+      "arn:aws:iam:",
       "arn:aws:iam::123456789012",
       "urn:aws:iam::123456789012:root",
       "ARN:aws:iam::123456789012:root",
@@ -58,8 +62,17 @@ describe("decode", () => {
 
 describe("encode", () => {
   test("round-trips to the same string", () => {
-    const value = "arn:aws:logs:us-east-1:123456789012:log-group:example:*";
-    assert.equal(z.encode(arn(), z.decode(arn(), value)), value);
+    const values = [
+      "arn:aws:logs:us-east-1:123456789012:log-group:example:*",
+      "arn:aws:s3:::example-bucket",
+      "arn:aws:service:::resource::",
+      "arn:aws:service::::",
+      "arn:aws:service:::line1\nline2",
+    ];
+
+    for (const value of values) {
+      assert.equal(z.encode(arn(), z.decode(arn(), value)), value);
+    }
   });
 
   test("rejects an empty partition, service, or resource", () => {

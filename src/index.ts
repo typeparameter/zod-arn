@@ -1,4 +1,3 @@
-import * as parser from "@aws-sdk/util-arn-parser";
 import * as z from "zod/v4";
 
 export interface ARN {
@@ -20,15 +19,16 @@ const arnSchema = z.object({
 export function arn(): z.ZodCodec<z.ZodString, typeof arnSchema> {
   return z.codec(z.string().trim(), arnSchema, {
     decode(input, ctx) {
-      try {
-        return parser.parse(input) satisfies ARN;
-      } catch {
+      const [prefix, partition = "", service = "", region = "", accountId = "", ...resource] = input.split(":");
+      if (prefix !== "arn" || resource.length === 0) {
         ctx.issues.push({ input, code: "custom", message: "Invalid ARN" });
         return z.NEVER;
       }
+
+      return { partition, service, region, accountId, resource: resource.join(":") } satisfies ARN;
     },
-    encode(value) {
-      return parser.build(value);
+    encode({ partition, service, region, accountId, resource }) {
+      return `arn:${partition}:${service}:${region}:${accountId}:${resource}`;
     },
   });
 }
